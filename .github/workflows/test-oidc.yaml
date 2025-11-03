@@ -1,9 +1,9 @@
 name: Test OpenID Connect
-on: 
+on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Select environment'
+        description: "Select environment"
         required: true
         default: apim-lab
         type: choice
@@ -16,22 +16,22 @@ on:
 permissions:
   id-token: write
   contents: read
-      
-jobs: 
+
+jobs:
   test-oidc:
-    environment: ${{ inputs.envir onment }}
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: 'Az CLI login'
-      uses: azure/login@v2
-      with:
+      - name: "Az CLI login"
+        uses: azure/login@v2
+        with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  
-    - name: 'Run Azure CLI commands'
-      run: |
+
+      - name: "Run Azure CLI commands"
+        run: |
           az account show
           az group list
           pwd
