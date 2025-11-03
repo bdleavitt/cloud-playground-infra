@@ -1,11 +1,11 @@
 name: Bicep What-If, Create Deploy
-on: 
+on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Select environment'
+        description: "Select environment"
         required: true
-        default: apim-lab
+        default: backend-pool-load-balancing
         type: choice
         options:
           - ai-foundry
@@ -19,10 +19,9 @@ permissions:
   issues: write
 
 jobs:
-
   bicep-what-if:
     name: Bicep What-If
-    uses: almirbanjanovic/cloud-playground-infra/.github/workflows/bicep-what-if.yaml@main
+    uses: bdleavitt/cloud-playground-infra/.github/workflows/bicep-what-if.yaml@main
     with:
       environment: ${{ inputs.environment }}
     secrets:
@@ -30,7 +29,6 @@ jobs:
       azureTenantId: ${{ secrets.AZURE_TENANT_ID }}
       azureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-  
   manual-approval:
     name: Manual Approval
     needs: [bicep-what-if]
@@ -45,11 +43,10 @@ jobs:
           issue-body: "Please approve or deny the deployment."
           fail-on-denial: true
 
-  
   bicep-create-deploy:
     name: Bicep Create Deploy
     needs: [manual-approval]
-    uses: almirbanjanovic/cloud-playground-infra/.github/workflows/bicep-create-deploy.yaml@main
+    uses: bdleavitt/cloud-playground-infra/.github/workflows/bicep-create-deploy.yaml@main
     with:
       environment: ${{ inputs.environment }}
     secrets:
