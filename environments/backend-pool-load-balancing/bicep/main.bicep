@@ -7,17 +7,17 @@ param aiServicesConfig array = [
     name: 'foundry1'
     location: 'eastus'
     priority: 1
+    weight: 50
   }
   {
     name: 'foundry2'
     location: 'swedencentral'
     priority: 2
-    weight: 50
   }
   {
     name: 'foundry3'
     location: 'westus'
-    priority: 2
+    priority: 1
     weight: 50
   }
 ]
